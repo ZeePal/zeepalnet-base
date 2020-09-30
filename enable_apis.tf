@@ -1,7 +1,8 @@
 locals {
   enable_gcp_apis = toset([
     "cloudresourcemanager.googleapis.com",
-    "cloudbuild.googleapis.com"
+    "cloudbuild.googleapis.com",
+    "dns.googleapis.com"
   ])
 }
 
