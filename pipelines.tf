@@ -1,4 +1,6 @@
 locals {
+  # REMINDER: Manually link GCP & GitHub for new repos:
+  # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet
   simple_terraform_pipelines = toset([
     "zeepalnet-base", # Me!
     "zeepalnet-dns"
