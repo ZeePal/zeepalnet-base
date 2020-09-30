@@ -1,6 +1,7 @@
 locals {
   simple_terraform_pipelines = toset([
-    "zeepalnet-base" # Me!
+    "zeepalnet-base", # Me!
+    "zeepalnet-dns"
   ])
 }
 
