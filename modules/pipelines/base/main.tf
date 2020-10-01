@@ -27,6 +27,13 @@ resource google_cloudbuild_trigger base {
   }
 
   build {
+    artifacts {
+      images = [
+        "${local.git_verify_image}:latest"
+      ]
+    }
+
+
     # TODO: Remove workaround for missing .git folder once google has fixed:
     ## https://github.com/GoogleCloudPlatform/cloud-builders/issues/236
     ## https://issuetracker.google.com/issues/136435027#comment17
