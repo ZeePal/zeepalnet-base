@@ -7,7 +7,7 @@ RUN apt-get -y update && \
     && rm -rf /var/lib/apt/lists/*
 
 COPY git-gpg /usr/local/bin/
-RUN git config --global gpg.program git-gpg
+RUN git config --system gpg.program git-gpg
 
 COPY signing_key.asc /tmp/signing_key.asc
 RUN gpg --no-default-keyring --keyring=/etc/signing_keys.gpg \
