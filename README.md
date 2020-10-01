@@ -10,7 +10,7 @@ This repo is intended to be the top/root level dependency for all future pipelin
     - `gcloud init`
 - Configure the GCP SDK to use your `gcloud` cli credentials
     - `gcloud auth application-default login`
-- Terraform installed
+- Terraform 0.13+ installed
 
 ## Example Process
 ```
