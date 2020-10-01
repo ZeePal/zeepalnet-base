@@ -4,7 +4,7 @@ locals {
     "GOOGLE_PROJECT=$_GOOGLE_PROJECT",
     "GOOGLE_REGION=$_GOOGLE_REGION"
   ]
-  git_verify_image = "asia.gcr.io/$PROJECT_ID/git-verify"
+  git_verify_image = "gcr.io/$PROJECT_ID/git-verify"
 }
 
 resource google_cloudbuild_trigger base {
