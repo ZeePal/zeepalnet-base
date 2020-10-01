@@ -30,4 +30,8 @@ terraform apply -parallelism=1000 -auto-approve
 # Upload the local state to the new GCS bucket
 mv _backend.tf.DISABLED _backend.tf
 yes yes|terraform init -backend-config=bucket="${GOOGLE_PROJECT}-tfstate" -backend-config=prefix="$REPO_NAME"
+
+# Build and Push the git-verify docker image
+docker build -t asia.gcr.io/$GOOGLE_PROJECT/git-verify docker/git-verify/
+docker push asia.gcr.io/$GOOGLE_PROJECT/git-verify
 ```

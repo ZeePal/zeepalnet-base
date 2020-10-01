@@ -36,6 +36,17 @@ resource google_cloudbuild_trigger base {
     }
 
     step {
+      id   = "build git verify image"
+      name = "gcr.io/cloud-builders/docker"
+      args = [
+        "build",
+        "-t", "${local.git_verify_image}:latest",
+        "--cache-from", "${local.git_verify_image}:latest",
+        "docker/git-verify/"
+      ]
+    }
+
+    step {
       id   = "terraform init"
       name = local.terraform_docker_image
       args = [
