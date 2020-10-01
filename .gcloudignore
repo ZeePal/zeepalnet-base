@@ -1,2 +1,0 @@
-# This file overrides the default `gcloud` ignored files & folders
-# I want the .git folder in Cloud Builds to verify the commit signature

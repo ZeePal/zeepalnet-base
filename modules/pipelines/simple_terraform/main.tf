@@ -27,6 +27,24 @@ resource google_cloudbuild_trigger base {
   }
 
   build {
+    # TODO: Remove workaround for missing .git folder once google has fixed:
+    ## https://github.com/GoogleCloudPlatform/cloud-builders/issues/236
+    ## https://issuetracker.google.com/issues/136435027#comment17
+    step {
+      id         = "fetch missing .git folder"
+      name       = "gcr.io/cloud-builders/git"
+      entrypoint = "bash"
+      args = [
+        "-c",
+        <<EOS
+git init
+git remote add origin https://github.com/${var.repo_owner}/$REPO_NAME.git
+git fetch --depth=1 origin $COMMIT_SHA
+git reset --hard FETCH_HEAD
+EOS
+      ]
+    }
+
     step {
       id   = "git verify"
       name = local.git_verify_image
