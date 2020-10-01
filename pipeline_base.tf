@@ -1,6 +1,5 @@
 module pipeline_base {
-  source   = "./modules/pipelines/base"
-  for_each = local.simple_terraform_pipelines
+  source = "./modules/pipelines/base"
 
   region              = data.google_client_config.config.region
   project_id          = data.google_client_config.config.project
