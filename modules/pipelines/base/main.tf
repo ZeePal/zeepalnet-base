@@ -72,8 +72,9 @@ EOS
     }
 
     step {
-      id   = "terraform init"
-      name = local.terraform_docker_image
+      id       = "terraform init"
+      wait_for = ["git verify"] # TF & Docker Build can run in parallel
+      name     = local.terraform_docker_image
       args = [
         "init",
         "-backend-config=bucket=$_TFSTATE_BUCKET",
