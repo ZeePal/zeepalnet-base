@@ -1,7 +1,8 @@
 locals {
   cloudbuild_iam_roles = toset([
-    "iam.securityAdmin",
+    "compute.admin",
     "dns.admin",
+    "iam.securityAdmin",
     "serviceusage.serviceUsageAdmin"
   ])
 }
