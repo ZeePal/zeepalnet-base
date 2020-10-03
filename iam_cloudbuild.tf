@@ -3,6 +3,7 @@ locals {
     "compute.admin",
     "dns.admin",
     "iam.securityAdmin",
+    "iam.serviceAccountUser",
     "serviceusage.serviceUsageAdmin"
   ])
 }
