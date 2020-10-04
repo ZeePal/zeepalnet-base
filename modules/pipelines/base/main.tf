@@ -74,7 +74,7 @@ EOS
       args = [
         "build",
         "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
-        "--build-arg", "terraform_docker_image=${terraform_docker_image}",
+        "--build-arg", "terraform_docker_image=${local.terraform_docker_image}",
         "--cache-from", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
         "docker/terraform-with-gcloud-ssh/"
       ]
