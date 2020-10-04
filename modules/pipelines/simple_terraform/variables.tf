@@ -27,3 +27,8 @@ variable extra_env_vars {
   description = "List of key=value strings for extra env vars (Format: ['KEY=VALUE',...])"
   default     = []
 }
+
+variable override_terraform_docker_image {
+  description = "Should I use a different Docker image than normal, if so what 1?"
+  default     = ""
+}

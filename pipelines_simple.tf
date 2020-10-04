@@ -1,6 +1,6 @@
 locals {
   # REMINDER: Manually link GCP & GitHub for new repos:
-  # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet
+  # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet&provider=github_app
   simple_terraform_pipelines = {
     "zeepalnet-dns" = ["TF_VAR_domain=${var.domain}"]
     "zeepalnet-gcp-swarm" = [

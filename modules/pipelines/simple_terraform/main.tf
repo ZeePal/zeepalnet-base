@@ -1,5 +1,5 @@
 locals {
-  terraform_docker_image = "hashicorp/terraform:${var.terraform_version}"
+  terraform_docker_image = var.override_terraform_docker_image == "" ? "hashicorp/terraform:${var.terraform_version}" : var.override_terraform_docker_image
   terraform_env_vars = concat([
     "GOOGLE_PROJECT=${var.project_id}",
     "GOOGLE_REGION=${var.region}"
