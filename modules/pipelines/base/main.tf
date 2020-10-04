@@ -49,7 +49,7 @@ EOS
 
     step {
       id   = "git verify"
-      name = local.git_verify_image
+      name = "${local.docker_image_prefix}/git-verify"
       args = [
         "verify-commit", "HEAD"
       ]
