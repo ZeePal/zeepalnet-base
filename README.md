@@ -17,6 +17,7 @@ This repo is intended to be the top/root level dependency for all future pipelin
 # Configure your expected environment
 export GOOGLE_REGION=australia-southeast1
 export GOOGLE_PROJECT=zeepalnet
+export TF_VAR_domain=zeepal.net
 REPO_NAME="$(basename "$PWD")"
 
 # Prep code for bootstrapping

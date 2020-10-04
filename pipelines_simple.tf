@@ -1,12 +1,12 @@
 locals {
   # REMINDER: Manually link GCP & GitHub for new repos:
   # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet
-  simple_terraform_pipelines = toset([
-    "zeepalnet-dns"
-  ])
+  simple_terraform_pipelines = {
+    "zeepalnet-dns" = ["TF_VAR_domain=${var.domain}"]
+  }
 }
 
-module pipelines {
+module pipelines_simple {
   source   = "./modules/pipelines/simple_terraform"
   for_each = local.simple_terraform_pipelines
 
@@ -16,4 +16,6 @@ module pipelines {
 
   repo_owner = "ZeePal"
   repo_name  = each.key
+
+  extra_env_vars = each.value
 }

@@ -1,13 +1,13 @@
 locals {
   terraform_docker_image = "hashicorp/terraform:${var.terraform_version}"
-  common_env_vars = [
-    "GOOGLE_PROJECT=$_GOOGLE_PROJECT",
-    "GOOGLE_REGION=$_GOOGLE_REGION"
-  ]
+  terraform_env_vars = concat([
+    "GOOGLE_PROJECT=${var.project_id}",
+    "GOOGLE_REGION=${var.region}"
+  ], var.extra_env_vars)
   git_verify_image = "gcr.io/$PROJECT_ID/git-verify"
 }
 
-resource google_cloudbuild_trigger base {
+resource google_cloudbuild_trigger pipeline {
   provider = google-beta
 
   name = var.repo_name
@@ -18,12 +18,6 @@ resource google_cloudbuild_trigger base {
     push {
       branch = "^master$"
     }
-  }
-
-  substitutions = {
-    _TFSTATE_BUCKET = var.tfstate_bucket_name
-    _GOOGLE_PROJECT = var.project_id
-    _GOOGLE_REGION  = var.region
   }
 
   build {
@@ -58,10 +52,10 @@ EOS
       name = local.terraform_docker_image
       args = [
         "init",
-        "-backend-config=bucket=$_TFSTATE_BUCKET",
+        "-backend-config=bucket=${var.tfstate_bucket_name}",
         "-backend-config=prefix=$REPO_NAME"
       ]
-      env = local.common_env_vars
+      env = local.terraform_env_vars
     }
 
     step {
@@ -72,7 +66,7 @@ EOS
         "-parallelism=1000",
         "-auto-approve"
       ]
-      env = local.common_env_vars
+      env = local.terraform_env_vars
     }
   }
 }

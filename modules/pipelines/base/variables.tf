@@ -22,3 +22,8 @@ variable terraform_version {
   description = "What version of terraform should we use?"
   default     = "0.13.3"
 }
+
+variable extra_env_vars {
+  description = "List of key=value strings for extra env vars (Format: ['KEY=VALUE',...])"
+  default     = []
+}

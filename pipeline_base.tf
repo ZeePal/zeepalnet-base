@@ -7,4 +7,6 @@ module pipeline_base {
 
   repo_owner = "ZeePal"
   repo_name  = "zeepalnet-base"
+
+  extra_env_vars = ["TF_VAR_domain=${var.domain}"]
 }
