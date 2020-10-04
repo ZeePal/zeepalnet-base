@@ -11,6 +11,7 @@ module pipeline_swarm_test {
   override_terraform_docker_image = "gcr.io/$PROJECT_ID/terraform-with-gcloud-ssh"
 
   extra_env_vars = [
-    "TF_VAR_host=swarm-1"
+    "TF_VAR_host=swarm-1",
+    "CLOUDSDK_COMPUTE_ZONE=us-west1-a"
   ]
 }
