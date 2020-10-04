@@ -1,2 +1,9 @@
-#!/bin/sh
-exec gcloud compute ssh --tunnel-through-iap --ssh-key-expire-after=1m "$@"
+#!/bin/bash
+
+if [[ $* == *"ProxyCommand"* ]]; then
+  # Real SSH Command comming from gcloud
+  exec /bin/ssh "$@"
+else
+  # Assume its the docker provider ssh request
+  exec gcloud compute ssh --tunnel-through-iap --ssh-key-expire-after=1m "$1" -- sudo docker system dial-stdio
+fi
