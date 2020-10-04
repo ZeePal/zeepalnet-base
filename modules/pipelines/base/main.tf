@@ -4,7 +4,7 @@ locals {
     "GOOGLE_PROJECT=${var.project_id}",
     "GOOGLE_REGION=${var.region}"
   ], var.extra_env_vars)
-  git_verify_image = "gcr.io/$PROJECT_ID/git-verify"
+  docker_image_prefix = "gcr.io/$PROJECT_ID"
 }
 
 resource google_cloudbuild_trigger pipeline {
@@ -23,7 +23,8 @@ resource google_cloudbuild_trigger pipeline {
   build {
     artifacts {
       images = [
-        "${local.git_verify_image}:latest"
+        "${local.docker_image_prefix}/git-verify:latest",
+        "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest"
       ]
     }
 
@@ -55,19 +56,33 @@ EOS
     }
 
     step {
-      id   = "build git verify image"
-      name = "gcr.io/cloud-builders/docker"
+      id       = "build git verify image"
+      wait_for = ["git verify"] # TF & Docker Builds can run in parallel
+      name     = "gcr.io/cloud-builders/docker"
       args = [
         "build",
-        "-t", "${local.git_verify_image}:latest",
-        "--cache-from", "${local.git_verify_image}:latest",
+        "-t", "${local.docker_image_prefix}/git-verify:latest",
+        "--cache-from", "${local.docker_image_prefix}/git-verify:latest",
         "docker/git-verify/"
       ]
     }
 
     step {
+      id       = "build gcloud ssh wrapper image"
+      wait_for = ["git verify"] # TF & Docker Builds can run in parallel
+      name     = "gcr.io/cloud-builders/docker"
+      args = [
+        "build",
+        "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
+        "--build-arg", "terraform_docker_image=${terraform_docker_image}",
+        "--cache-from", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
+        "docker/terraform-with-gcloud-ssh/"
+      ]
+    }
+
+    step {
       id       = "terraform init"
-      wait_for = ["git verify"] # TF & Docker Build can run in parallel
+      wait_for = ["git verify"] # TF & Docker Builds can run in parallel
       name     = local.terraform_docker_image
       args = [
         "init",

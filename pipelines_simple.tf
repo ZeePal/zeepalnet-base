@@ -3,6 +3,10 @@ locals {
   # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet
   simple_terraform_pipelines = {
     "zeepalnet-dns" = ["TF_VAR_domain=${var.domain}"]
+    "zeepalnet-gcp-swarm" = [
+      "GOOGLE_ZONE=us-west1-a",
+      "TF_VAR_domain=${var.domain}",
+    ]
   }
 }
 

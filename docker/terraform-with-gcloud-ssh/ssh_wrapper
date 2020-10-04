@@ -1,0 +1,2 @@
+#!/bin/sh
+exec gcloud compute ssh --tunnel-through-iap --ssh-key-expire-after=1m "$@"
