@@ -8,10 +8,5 @@ module pipeline_swarm_test {
   repo_owner = "ZeePal"
   repo_name  = "zeepalnet-gcp-swarm-test"
 
-  extra_env_vars = [
-    "GOOGLE_ZONE=us-west1-a",
-    "TF_VAR_domain=${var.domain}",
-  ]
-
   override_terraform_docker_image = "gcr.io/$PROJECT_ID/terraform-with-gcloud-ssh"
 }
