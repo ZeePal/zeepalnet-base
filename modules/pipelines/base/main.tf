@@ -75,8 +75,9 @@ EOS
       ]
     }
     step {
-      id   = "build gcloud ssh wrapper image"
-      name = "gcr.io/cloud-builders/docker"
+      id       = "build gcloud ssh wrapper image"
+      wait_for = ["pull gcloud image for caching"]
+      name     = "gcr.io/cloud-builders/docker"
       args = [
         "build",
         "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
@@ -98,8 +99,9 @@ EOS
       env = local.terraform_env_vars
     }
     step {
-      id   = "terraform apply"
-      name = local.terraform_docker_image
+      id       = "terraform apply"
+      wait_for = ["terraform init"]
+      name     = local.terraform_docker_image
       args = [
         "apply",
         "-parallelism=1000",
