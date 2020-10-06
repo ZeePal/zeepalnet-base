@@ -23,8 +23,7 @@ resource google_cloudbuild_trigger pipeline {
   build {
     artifacts {
       images = [
-        "${local.docker_image_prefix}/git-verify:latest",
-        "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest"
+        "${local.docker_image_prefix}/git-verify:latest"
       ]
     }
 
@@ -67,23 +66,13 @@ EOS
     }
 
     step {
-      id       = "pull gcloud image for caching"
-      wait_for = ["git verify"] # TF & Docker Builds can run in parallel
-      name     = "gcr.io/cloud-builders/docker"
+      id   = "build gcloud ssh wrapper image"
+      name = "gcr.io/kaniko-project/executor"
       args = [
-        "pull", "gcr.io/cloud-builders/gcloud"
-      ]
-    }
-    step {
-      id       = "build gcloud ssh wrapper image"
-      wait_for = ["pull gcloud image for caching"]
-      name     = "gcr.io/cloud-builders/docker"
-      args = [
-        "build",
-        "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
-        "--build-arg", "terraform_version=${var.terraform_version}",
-        "--cache-from", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
-        "docker/terraform-with-gcloud-ssh/"
+        "--context", "docker/terraform-with-gcloud-ssh/",
+        "--destination", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
+        "--cache=true",
+        "--build-arg", "terraform_version=${var.terraform_version}"
       ]
     }
 
