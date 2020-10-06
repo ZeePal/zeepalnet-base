@@ -46,7 +46,6 @@ git reset --hard FETCH_HEAD
 EOS
       ]
     }
-
     step {
       id   = "git verify"
       name = "${local.docker_image_prefix}/git-verify"
@@ -91,7 +90,6 @@ EOS
       ]
       env = local.terraform_env_vars
     }
-
     step {
       id   = "terraform apply"
       name = local.terraform_docker_image
