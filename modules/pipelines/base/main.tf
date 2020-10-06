@@ -46,6 +46,7 @@ git reset --hard FETCH_HEAD
 EOS
       ]
     }
+
     step {
       id   = "git verify"
       name = "${local.docker_image_prefix}/git-verify"
@@ -67,16 +68,9 @@ EOS
     }
 
     step {
-      id       = "pull terraform docker image"
+      id       = "build gcloud ssh wrapper image"
       wait_for = ["git verify"] # TF & Docker Builds can run in parallel
       name     = "gcr.io/cloud-builders/docker"
-      args = [
-        "pull", local.terraform_docker_image
-      ]
-    }
-    step {
-      id   = "build gcloud ssh wrapper image"
-      name = "gcr.io/cloud-builders/docker"
       args = [
         "build",
         "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
@@ -101,6 +95,7 @@ EOS
       ]
       env = local.terraform_env_vars
     }
+
     step {
       id   = "terraform apply"
       name = local.terraform_docker_image
