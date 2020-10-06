@@ -67,9 +67,16 @@ EOS
     }
 
     step {
-      id       = "build gcloud ssh wrapper image"
+      id       = "pull gcloud image for caching"
       wait_for = ["git verify"] # TF & Docker Builds can run in parallel
       name     = "gcr.io/cloud-builders/docker"
+      args = [
+        "pull", "gcr.io/cloud-builders/gcloud"
+      ]
+    }
+    step {
+      id   = "build gcloud ssh wrapper image"
+      name = "gcr.io/cloud-builders/docker"
       args = [
         "build",
         "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
