@@ -1,10 +1,11 @@
 locals {
+  docker_image_prefix    = "gcr.io/$PROJECT_ID"
   terraform_docker_image = "hashicorp/terraform:${var.terraform_version}"
+
   terraform_env_vars = concat([
     "GOOGLE_PROJECT=${var.project_id}",
     "GOOGLE_REGION=${var.region}"
   ], var.extra_env_vars)
-  docker_image_prefix = "gcr.io/$PROJECT_ID"
 }
 
 resource google_cloudbuild_trigger pipeline {

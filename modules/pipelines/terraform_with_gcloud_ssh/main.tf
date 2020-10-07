@@ -1,6 +1,7 @@
 locals {
-  git_verify_image       = "gcr.io/$PROJECT_ID/git-verify"
-  terraform_docker_image = "hashicorp/terraform:${var.terraform_version}"
+  my_docker_registry     = "gcr.io/$PROJECT_ID"
+  git_verify_image       = "${local.my_docker_registry}gcr.io/$PROJECT_ID/git-verify"
+  terraform_docker_image = "${local.my_docker_registry}/terraform-with-gcloud-ssh"
 
   terraform_env_vars = concat([
     "GOOGLE_PROJECT=${var.project_id}",
@@ -36,6 +37,7 @@ git init
 git remote add origin https://github.com/${var.repo_owner}/$REPO_NAME.git
 git fetch --depth=1 origin $COMMIT_SHA
 git reset --hard FETCH_HEAD
+mkdir ~/.ssh  # .ssh needs to exist to prevent gcloud ssh from hanging
 EOS
       ]
     }
