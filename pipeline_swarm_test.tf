@@ -10,6 +10,6 @@ module pipeline_swarm_test {
 
   extra_env_vars = [
     "TF_VAR_host=swarm-1",
-    #"CLOUDSDK_COMPUTE_ZONE=us-west1-a"
+    "CLOUDSDK_COMPUTE_ZONE=us-west1-a"
   ]
 }
