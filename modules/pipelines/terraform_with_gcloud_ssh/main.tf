@@ -1,6 +1,6 @@
 locals {
   my_docker_registry     = "gcr.io/$PROJECT_ID"
-  git_verify_image       = "${local.my_docker_registry}gcr.io/$PROJECT_ID/git-verify"
+  git_verify_image       = "${local.my_docker_registry}/git-verify"
   terraform_docker_image = "${local.my_docker_registry}/terraform-with-gcloud-ssh"
 
   terraform_env_vars = concat([
