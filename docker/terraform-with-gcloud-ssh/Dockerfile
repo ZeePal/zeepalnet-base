@@ -3,7 +3,7 @@ FROM gcr.io/cloud-builders/gcloud
 COPY ssh_wrapper /usr/local/bin/ssh
 
 COPY hashicorp.asc /tmp/
-ARG terraform_version=0.13.3
+ARG terraform_version=0.15.4
 RUN cd /tmp && \
     gpg --no-default-keyring --keyring=hashicorp.gpg --import hashicorp.asc && \
     curl -o terraform_${terraform_version}_linux_amd64.zip https://releases.hashicorp.com/terraform/$terraform_version/terraform_${terraform_version}_linux_amd64.zip && \
