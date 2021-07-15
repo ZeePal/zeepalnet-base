@@ -5,7 +5,8 @@ locals {
     "iam.securityAdmin",
     "iam.serviceAccountUser",
     "iap.tunnelResourceAccessor",
-    "serviceusage.serviceUsageAdmin"
+    "serviceusage.serviceUsageAdmin",
+    "storage.admin"
   ])
 }
 
