@@ -4,10 +4,6 @@ resource "google_storage_bucket" "archive" {
 
   uniform_bucket_level_access = true
 
-  versioning {
-    enabled = true
-  }
-
   lifecycle_rule {
     action {
       type          = "SetStorageClass"
