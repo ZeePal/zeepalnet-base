@@ -1,4 +1,4 @@
-module pipeline_base {
+module "pipeline_base" {
   source = "./modules/pipelines/base"
 
   region              = data.google_client_config.config.region

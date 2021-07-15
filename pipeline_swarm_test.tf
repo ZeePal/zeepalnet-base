@@ -1,4 +1,4 @@
-module pipeline_swarm_test {
+module "pipeline_swarm_test" {
   source = "./modules/pipelines/terraform_with_gcloud_ssh"
 
   region              = "us-west1"

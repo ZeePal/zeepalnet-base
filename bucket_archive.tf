@@ -1,4 +1,4 @@
-resource google_storage_bucket archive {
+resource "google_storage_bucket" "archive" {
   name     = "${data.google_client_config.config.project}-archive"
   location = "US"
 

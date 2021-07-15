@@ -9,7 +9,7 @@ locals {
   ], var.extra_env_vars)
 }
 
-resource google_cloudbuild_trigger pipeline {
+resource "google_cloudbuild_trigger" "pipeline" {
   provider = google-beta
 
   name = var.repo_name

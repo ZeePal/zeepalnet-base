@@ -10,7 +10,7 @@ locals {
   }
 }
 
-module pipelines_simple {
+module "pipelines_simple" {
   source   = "./modules/pipelines/simple_terraform"
   for_each = local.simple_terraform_pipelines
 

@@ -1,5 +1,5 @@
 terraform {
-  backend gcs {
+  backend "gcs" {
     # Values to be set/provided by Pipeline
   }
 }

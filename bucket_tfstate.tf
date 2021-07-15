@@ -1,4 +1,4 @@
-resource google_storage_bucket tfstate {
+resource "google_storage_bucket" "tfstate" {
   name     = "${data.google_client_config.config.project}-tfstate"
   location = data.google_client_config.config.region
 

@@ -9,7 +9,7 @@ locals {
   ])
 }
 
-resource google_project_service api {
+resource "google_project_service" "api" {
   for_each = local.enable_gcp_apis
   service  = each.key
 
