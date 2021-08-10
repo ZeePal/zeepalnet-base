@@ -20,7 +20,7 @@ variable "tfstate_bucket_name" {
 
 variable "terraform_version" {
   description = "What version of terraform should we use?"
-  default     = "0.15.4"
+  default     = "1.0.4"
 }
 
 variable "extra_env_vars" {
