@@ -36,3 +36,4 @@ yes yes|terraform init -backend-config=bucket="${GOOGLE_PROJECT}-tfstate" -backe
 docker build -t gcr.io/$GOOGLE_PROJECT/git-verify docker/git-verify/
 docker push gcr.io/$GOOGLE_PROJECT/git-verify
 ```
+
