@@ -24,8 +24,7 @@ resource "google_cloudbuild_trigger" "pipeline" {
   build {
     artifacts {
       images = [
-        "${local.docker_image_prefix}/git-verify:latest",
-        "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest"
+        "${local.docker_image_prefix}/git-verify:latest"
       ]
     }
 
@@ -64,27 +63,6 @@ EOS
         "-t", "${local.docker_image_prefix}/git-verify:latest",
         "--cache-from", "${local.docker_image_prefix}/git-verify:latest",
         "docker/git-verify/"
-      ]
-    }
-
-    step {
-      id       = "pull current gcloud ssh wrapper image"
-      wait_for = ["git verify"] # TF & Docker Builds can run in parallel
-      name     = "gcr.io/cloud-builders/docker"
-      args = [
-        "pull", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest"
-      ]
-    }
-    step {
-      id       = "build gcloud ssh wrapper image"
-      wait_for = ["pull current gcloud ssh wrapper image"]
-      name     = "gcr.io/cloud-builders/docker"
-      args = [
-        "build",
-        "-t", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
-        "--build-arg", "terraform_version=${var.terraform_version}",
-        "--cache-from", "${local.docker_image_prefix}/terraform-with-gcloud-ssh:latest",
-        "docker/terraform-with-gcloud-ssh/"
       ]
     }
 

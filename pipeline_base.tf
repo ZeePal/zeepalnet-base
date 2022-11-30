@@ -9,4 +9,6 @@ module "pipeline_base" {
   repo_name  = "zeepalnet-base"
 
   extra_env_vars = ["TF_VAR_domain=${var.domain}"]
+
+  terraform_version = var.terraform_version
 }

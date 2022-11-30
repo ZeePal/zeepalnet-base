@@ -22,4 +22,6 @@ module "pipelines_simple" {
   repo_name  = each.key
 
   extra_env_vars = each.value
+
+  terraform_version = var.terraform_version
 }
