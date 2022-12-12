@@ -6,5 +6,7 @@ terraform {
     # Beta provider used for:
     # * Cloud Build Trigger with GitHub functionality
     google-beta = { version = "~> 4.44" }
+
+    http = { version = "~> 3.2" }
   }
 }

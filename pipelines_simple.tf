@@ -1,23 +1,29 @@
 locals {
   # REMINDER: Manually link GCP & GitHub for new repos:
   # https://console.cloud.google.com/cloud-build/triggers/connect?project=zeepalnet&provider=github_app
-  simple_terraform_pipelines = {
-    "zeepalnet-dns" = ["TF_VAR_domain=${var.domain}"]
-  }
+  simple_terraform_pipelines = toset([
+    "zeepalnet-dns"
+  ])
+}
+
+data "http" "pipelines_simple" {
+  for_each = local.simple_terraform_pipelines
+
+  url = "https://raw.githubusercontent.com/ZeePal/${each.key}/master/cloudbuild.yaml"
 }
 
 module "pipelines_simple" {
-  source   = "./modules/pipelines/simple_terraform"
+  source   = "github.com/ZeePal/terraform-google-cloudbuild-verify-gpg"
   for_each = local.simple_terraform_pipelines
 
-  region              = data.google_client_config.config.region
-  project_id          = data.google_client_config.config.project
-  tfstate_bucket_name = google_storage_bucket.tfstate.name
+  source_build_template = yamldecode(data.http.pipelines_simple[each.key].response_body)
+  signing_key           = file("signing_key.asc")
 
-  repo_owner = "ZeePal"
-  repo_name  = each.key
-
-  extra_env_vars = each.value
-
-  terraform_version = var.terraform_version
+  github = {
+    owner = "ZeePal"
+    name  = each.key
+    push = {
+      branch = "^master$"
+    }
+  }
 }
