@@ -1,8 +1,8 @@
 substitutions:
-  TERRAFORM_VERSION: 1.3.6
+  _TERRAFORM_VERSION: 1.3.6
 
 steps:
-  - name: hashicorp/terraform:$TERRAFORM_VERSION
+  - name: hashicorp/terraform:$_TERRAFORM_VERSION
     env:
       - GOOGLE_PROJECT=$PROJECT_ID
       - GOOGLE_REGION=$LOCATION
@@ -11,7 +11,7 @@ steps:
       - -backend-config=bucket=$PROJECT_ID-tfstate
       - -backend-config=prefix=$REPO_NAME
 
-  - name: hashicorp/terraform:$TERRAFORM_VERSION
+  - name: hashicorp/terraform:$_TERRAFORM_VERSION
     env:
       - GOOGLE_PROJECT=$PROJECT_ID
       - GOOGLE_REGION=$LOCATION
