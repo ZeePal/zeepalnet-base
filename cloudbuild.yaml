@@ -5,7 +5,7 @@ steps:
   - name: hashicorp/terraform:$_TERRAFORM_VERSION
     env:
       - GOOGLE_PROJECT=$PROJECT_ID
-      - GOOGLE_REGION=$LOCATION
+      - GOOGLE_REGION=australia-southeast1
     args:
       - init
       - -backend-config=bucket=$PROJECT_ID-tfstate
@@ -14,7 +14,7 @@ steps:
   - name: hashicorp/terraform:$_TERRAFORM_VERSION
     env:
       - GOOGLE_PROJECT=$PROJECT_ID
-      - GOOGLE_REGION=$LOCATION
+      - GOOGLE_REGION=australia-southeast1
     args:
       - apply
       - -auto-approve
